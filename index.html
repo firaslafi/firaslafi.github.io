@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+        }
+        .no-spinners {
+            -moz-appearance: textfield;
+        }
+      
+        .no-spinners::-webkit-outer-spin-button,
+        .no-spinners::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        /* Increase font size and make it bold for h1 and label elements */
+        .container h1,
+        .container label {
+            font-size: 24px; /* You can adjust the size as needed */
+            font-weight: bold;
+        }
+        
+        /* Make the input boxes wider */
+        .container input[type="number"] {
+            width: 70%; /* Adjust the width as needed */
+            padding: 40px; /* Add padding for spacing */
+            margin: 50px; /* Add margin to separate input fields */
+                  border: 2px solid #ccc; /* Add a border for clarity */
+        border-radius: 5px; /* Add rounded corners */
+        outline: solid; /* Remove default outline */
+        transition: border-color 0.3s; /* Add a smooth transition for border color */
+        }
+
+        /* Media query for phones */
+        @media (max-width: 480px) {
+            /* Adjust font size for smaller screens */
+            .container h1,
+            .container label {
+                font-size: 20px;
+            }
+        }
+              /* Increase button size */
+        .container button {
+            font-size: 18px; /* Adjust the font size as needed */
+            padding: 15px 30px; /* Adjust padding to increase button size */
+        }
+          /* Improve input box appearance */
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Salary Calculator</h1>
+        <label for="totalSalary">Total Salary:</label>
+        <input type="number" id="totalSalary" placeholder="Enter total salary" class="no-spinners">
+        <br><br>
+        <label for="monthDays">Total Days in Month:</label>
+        <input type="number" id="monthDays" placeholder="Enter total days in month" class="no-spinners">
+        <br><br>
+        <label for="absentDays">Absent Days:</label>
+        <input type="number" id="absentDays" placeholder="Enter absent days" class="no-spinners">
+        <br><br>
+        <button onclick="calculateSalary()">Calculate</button>
+        <br><br>
+        <div id="result"></div>
+    </div>
+
+    <div class="container">
+        <h1>Product Calculator</h1>
+        <label for="unitPrice">Unit Price:</label>
+        <input type="number" id="unitPrice" placeholder="Unit price" class="no-spinners">
+        <br><br>
+        <label for="totalAmount">Total Amount:</label>
+        <input type="number" id="totalAmount" placeholder="Total Amount" class="no-spinners">
+        <br><br>
+        <button onclick="calculateTotal()">Calculate</button>
+        <br><br>
+        <div id="result2"></div>
+    </div>
+
+    <script>
+        function calculateSalary() {
+            const totalSalary = parseFloat(document.getElementById("totalSalary").value);
+            const monthDays = parseInt(document.getElementById("monthDays").value);
+            const absentDays = parseInt(document.getElementById("absentDays").value);
+
+            if (isNaN(totalSalary) || isNaN(absentDays)) {
+                document.getElementById("result").innerHTML = "Please enter valid numbers for Total Salary and Absent Days.";
+                return;
+            }
+
+            if (monthDays <= 0 || monthDays > 31 || isNaN(monthDays)) {
+                document.getElementById("result").innerHTML = "Please enter a valid number of Total Days in Month (1-31).";
+                return;
+            }
+
+            const workingDays = monthDays - absentDays;
+            const dailySalary = totalSalary / monthDays;
+            const deductedSalary = dailySalary * workingDays;
+
+            document.getElementById("result").innerHTML = `Deducted Salary: $${deductedSalary.toFixed(2)}`;
+        }
+
+        function calculateTotal() {
+            const unitPrice = parseFloat(document.getElementById("unitPrice").value);
+            const totalAmount = parseFloat(document.getElementById("totalAmount").value);
+
+            if (isNaN(unitPrice) || isNaN(totalAmount)) {
+                document.getElementById("result2").innerHTML = "Please enter valid numbers.";
+                return;
+            }
+
+            const totalPricePay = unitPrice * totalAmount;
+            document.getElementById("result2").innerHTML = `Total to pay: $${totalPricePay.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
